@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools"
+           xmlns:androi="http://schemas.android.com/apk/res-auto">
+
+    <!-- Base application theme. there will be no action bar, only a toolbar, we specify it here-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/PrimaryColor</item>
+        <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+
+
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- Base application theme. there will be no action bar, only a toolbar-->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:colorPrimary">@color/PrimaryColor</item>
+        <item name="android:colorPrimaryDark">@color/PrimaryDarkColor</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+</resources>

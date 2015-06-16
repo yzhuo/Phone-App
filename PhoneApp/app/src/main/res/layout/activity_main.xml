@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:fitsSystemWindows="true">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/tool_bar">
+        </include>
+        <!-- Main content -->
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/options_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="#ffffff"
+            android:textSize="30sp"/>
+
+    </LinearLayout>
+    <!-- Content section -->
+
+    <!-- Drawer Section. Recycler view - better list view, better memory management than list view-->
+    <!-- check article on layout_width explicit values-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawer_recyclerView"
+        android:layout_width="304dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:scrollbars="vertical"
+        android:background="#ffffff"/>
+
+</android.support.v4.widget.DrawerLayout>
+

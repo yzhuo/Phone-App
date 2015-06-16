@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">YatesDev</string>
+    <string name="title">Yates</string>
+    <string name="login">Login</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="App_Options">
+        <item>Buy</item>
+        <item>Sell</item>
+        <item>Rent</item>
+    </string-array>
+
+</resources>
