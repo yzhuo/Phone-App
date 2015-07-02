@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -26,13 +27,16 @@ public class MainActivity extends ActionBarActivity {
     Toolbar toolbar;
     @InjectView(R.id.drawer_recyclerView) RecyclerView drawerRecyclerView;
 
-    //set the background
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        RelativeLayout backGround = (RelativeLayout) findViewById(R.id.main_layout);
+        backGround.setBackgroundResource(R.drawable.background_main);
+
         ButterKnife.inject(this); //gives access to views defined above
 
         setSupportActionBar(toolbar);
