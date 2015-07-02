@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@drawable/background_main"
     android:fitsSystemWindows="true">
 
 
@@ -22,28 +22,40 @@
     </LinearLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
         >
         <!-- search option -->
         <Spinner
             android:id="@+id/options_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
             android:layout_above="@+id/search"
-            android:background="@color/PrimaryColor"
+            android:background="#702196F3"
             />
         <!-- search criteria -->
-        <Spinner
+        <EditText
             android:id="@+id/search"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="10dp"
+            android:background="#70ffffff"
+            android:text="@string/search_by"
             />
-
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/search"
+            android:background="#702196F3"
+            android:text="@string/done"
+            />
     </RelativeLayout>
     <!-- Content section -->
 

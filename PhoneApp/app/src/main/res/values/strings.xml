@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">YatesDev</string>
-    <string name="title">Yates</string>
+    <string name="app_name">Yates Realty</string>
+    <string name="title">Yates Realty</string>
     <string name="login">Login</string>
     <string name="action_settings">Settings</string>
-    <string name="address">Address, City, State, Zip</string>
+    <string name="search_by">Address, City, Zip, Neighborhood or MLS</string>
+    <string name="done">Continue</string>
     <string-array name="App_Options">
         <item>Buy</item>
         <item>Sell</item>
