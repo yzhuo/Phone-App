@@ -3,7 +3,7 @@
     <string name="title">Yates</string>
     <string name="login">Login</string>
     <string name="action_settings">Settings</string>
-
+    <string name="address">Address, City, State, Zip</string>
     <string-array name="App_Options">
         <item>Buy</item>
         <item>Sell</item>

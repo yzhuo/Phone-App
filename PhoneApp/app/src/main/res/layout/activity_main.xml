@@ -21,21 +21,30 @@
         <!-- Main content -->
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <!-- search option -->
         <Spinner
             android:id="@+id/options_spinner"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:background="#ffffff"
-            android:textSize="30sp"/>
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/search"
+            android:background="@color/PrimaryColor"
+            />
+        <!-- search criteria -->
+        <Spinner
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            />
 
-    </LinearLayout>
+    </RelativeLayout>
     <!-- Content section -->
 
     <!-- Drawer Section. Recycler view - better list view, better memory management than list view-->
