@@ -26,6 +26,8 @@ public class MainActivity extends ActionBarActivity {
     Toolbar toolbar;
     @InjectView(R.id.drawer_recyclerView) RecyclerView drawerRecyclerView;
 
+    //set the background
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
