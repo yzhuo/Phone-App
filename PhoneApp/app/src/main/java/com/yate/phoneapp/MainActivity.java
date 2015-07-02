@@ -1,5 +1,6 @@
 package com.yate.phoneapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -7,10 +8,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +25,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
+
+    private Spinner main_spinner;
+    private static final String[]paths = {"Buy","Rent","New Listing","Recent Sold", "Featured", "Commercial", "EB-5"};
 
     //butterknife library -- makes getting to access to views from two lines of code to one
     @InjectView(R.id.drawer_layout)
@@ -61,15 +70,54 @@ public class MainActivity extends ActionBarActivity {
         drawerRecyclerView.setHasFixedSize(true);
         drawerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        Spinner spinner = (Spinner) findViewById(R.id.options_spinner);
+        //******************************Spinner Adapter for main
+        main_spinner = (Spinner) findViewById(R.id.options_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.App_Options, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,paths){
+            public View getView(int position, View convertView,
+                                ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                //((TextView) v).setTextSize(16);
+                ((TextView) v).setTextColor(Color.WHITE);
+                return v;
+            }
+
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView,
+                        parent);
+
+                ((TextView) v).setTextColor(Color.WHITE);
+                //v.setBackgroundResource(R.drawable.spinner_bg);
+
+                //((TextView) v).setTextColor(getResources().getColorStateList(
+                //        R.color.spinner_text));
+                //((TextView) v).setTypeface(fontStyle);
+                //((TextView) v).setGravity(Gravity.CENTER);
+
+                return v;
+            }
+        };
+
+        //**********************Spinner Adapter
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        main_spinner.setAdapter(adapter);
+        //***************Spinner activity
+        main_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.v("item", (String) parent.getItemAtPosition(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
