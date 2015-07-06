@@ -25,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:layout_above="@+id/search"
-            android:background="#902196F3"
+            android:layout_above="@+id/searchArea"
+            android:background="@drawable/roundedbutton"
             >
             <Spinner
                 android:id="@+id/options_spinner"
@@ -37,25 +37,44 @@
                 />
         </LinearLayout>
         <!-- search criteria -->
-        <EditText
-            android:id="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+        <LinearLayout
+            android:id="@+id/searchArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
             android:layout_margin="10dp"
             android:background="#80ffffff"
-            android:text="@string/search_by"
-            android:textColor="#50000000"
-            />
+            >
+            <EditText
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".99"
+                android:layout_centerInParent="true"
+                android:background="#80ffffff"
+                android:hint="@string/search_by"
+                android:textColorHint="#50000000"
+                />
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".01"
+                android:layout_centerInParent="true"
+                android:layout_alignRight="@+id/searchArea"
+                android:id="@+id/clear"
+                android:text="X"
+                android:popupBackground="#70000000"
+                />
+        </LinearLayout>
+
         <Button
+            android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/search"
-            android:background="#902196F3"
+            android:layout_below="@+id/searchArea"
+            android:background="@drawable/roundedbutton"
             android:textColor="#FFFFFF"
             android:text="@string/done"
             android:onClick="sendMessage"

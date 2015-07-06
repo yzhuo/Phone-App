@@ -1,5 +1,6 @@
 package com.yate.phoneapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -21,7 +22,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         //check if google map is availble
-
+        mMap.setMyLocationEnabled(true);
         mapFragment.getMapAsync(this);
         
     }
@@ -29,9 +30,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap map) {
         // Add a marker in Sydney, Australia, and move the camera.
+        Intent intent = getIntent();
+        String message=intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        map.addMarker(new MarkerOptions().position(sydney).title(message));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,14));
     }
 
     @Override

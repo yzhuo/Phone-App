@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner main_spinner;
     private static final String[]paths = {"Buy","Rent","New Listing","Recent Sold", "Featured", "Commercial", "EB-5"};
+    public final static String EXTRA_MESSAGE = "com.yate.phoneapp.MESSAGE";
 
     //butterknife library -- makes getting to access to views from two lines of code to one
     @InjectView(R.id.drawer_layout)
@@ -178,7 +181,24 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        //************Spinner activity end
+
+        //******************text activity
+
+        //****************text activity end
+
+        //**************reset activity
+        Button reset = (Button)findViewById(R.id.clear);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                EditText search =(EditText)findViewById(R.id.search);
+                search.setText("");
+            }
+        });
+        //************reset activity end
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -200,10 +220,13 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
     */
-    //**********************button activity
+    //**********************continue button activity
     public void sendMessage(View view){
         Intent intent = new Intent(this, MapsActivity.class);
+        EditText search = (EditText) findViewById(R.id.search);
+        String message = search.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE,message);
         startActivity(intent);
     }
-    //************************button activity end
+    //************************continue button activity end
 }
