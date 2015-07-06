@@ -22,7 +22,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         //check if google map is availble
-        mMap.setMyLocationEnabled(true);
         mapFragment.getMapAsync(this);
         
     }
