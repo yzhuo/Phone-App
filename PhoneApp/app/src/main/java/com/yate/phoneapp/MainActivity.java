@@ -1,5 +1,6 @@
 package com.yate.phoneapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -199,5 +200,9 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
     */
-
+    //**********************button activity
+    public void sendMessage(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+    }
+    //************************button activity end
 }

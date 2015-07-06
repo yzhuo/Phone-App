@@ -58,6 +58,7 @@
             android:background="#902196F3"
             android:textColor="#FFFFFF"
             android:text="@string/done"
+            android:onClick="sendMessage"
             />
     </RelativeLayout>
 
