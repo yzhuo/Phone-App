@@ -60,7 +60,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                     break;
                 case "Map": holder.imageView.setImageResource(R.drawable.ic_map);
                     break;
-                case "Saved Pages": holder.imageView.setImageResource(R.drawable.ic_action_ic_save);
+                case "Saved Pages": holder.imageView.setImageResource(R.drawable.ic_save);
                     break;
                 case "About": holder.imageView.setImageResource(R.drawable.ic_about);
                     break;
