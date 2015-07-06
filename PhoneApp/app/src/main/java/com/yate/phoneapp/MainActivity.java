@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         rows.add("Home");
         rows.add("Favorites");
         rows.add("Map");
-        rows.add("Search");
         rows.add("About");
         rows.add("Saved Pages");
 
