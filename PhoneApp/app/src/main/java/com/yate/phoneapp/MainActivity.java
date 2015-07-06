@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
     //**********************button activity
     public void sendMessage(View view){
         Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
     //************************button activity end
 }
