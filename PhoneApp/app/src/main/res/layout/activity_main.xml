@@ -54,6 +54,8 @@
                 android:background="#80ffffff"
                 android:hint="@string/search_by"
                 android:textColorHint="#50000000"
+                android:inputType="text|textAutoCorrect"
+                android:imeOptions="actionSend"
                 />
 
             <Button

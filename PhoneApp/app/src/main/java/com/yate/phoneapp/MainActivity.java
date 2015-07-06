@@ -11,10 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -184,7 +186,18 @@ public class MainActivity extends AppCompatActivity {
         //************Spinner activity end
 
         //******************text activity
-
+        EditText editText = (EditText) findViewById(R.id.search);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND){
+                    Button send = (Button) findViewById(R.id.send);
+                    send.performClick();
+                }
+                return handled;
+            }
+        });
         //****************text activity end
 
         //**************reset activity
