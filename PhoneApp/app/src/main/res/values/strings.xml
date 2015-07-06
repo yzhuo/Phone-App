@@ -5,6 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="search_by">Address, City, Zip, Neighborhood or MLS</string>
     <string name="done"><b>Continue</b></string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>
