@@ -2,7 +2,6 @@ package com.yate.phoneapp;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,10 +21,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         //check if google map is availble
-        if (mMap == null){
-            Toast.makeText(getApplicationContext(),"Map Error",Toast.LENGTH_LONG).show();
-        }
+
         mapFragment.getMapAsync(this);
+        
     }
 
     @Override
