@@ -1,5 +1,6 @@
 package com.yate.phoneapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -198,6 +200,15 @@ public class MainActivity extends AppCompatActivity {
                 return handled;
             }
         });
+        //***********able to hide keyboard when outside the text
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus){
+                if(!hasFocus){
+                    hideKeyboard(v);
+                }
+            }
+        });
         //****************text activity end
 
         //**************reset activity
@@ -242,4 +253,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     //************************continue button activity end
+
+
+    //*************hide keyboard ******************
+    public void hideKeyboard(View view){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
+    //**************end hide keybaord
 }

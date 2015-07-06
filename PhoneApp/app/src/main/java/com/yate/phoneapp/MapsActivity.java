@@ -1,6 +1,9 @@
 package com.yate.phoneapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -31,6 +34,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney, Australia, and move the camera.
         Intent intent = getIntent();
         String message=intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         LatLng sydney = new LatLng(-34, 151);
         map.addMarker(new MarkerOptions().position(sydney).title(message));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,14));
