@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +28,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private Spinner main_spinner;
     private static final String[]paths = {"Buy","Rent","New Listing","Recent Sold", "Featured", "Commercial", "EB-5"};
@@ -63,12 +67,69 @@ public class MainActivity extends ActionBarActivity {
         rows.add("Map");
         rows.add("Search");
         rows.add("About");
-        rows.add("Saved Page");
+        rows.add("Saved Pages");
 
         DrawerAdapter drawerAdapter = new DrawerAdapter(rows);
         drawerRecyclerView.setAdapter(drawerAdapter);
         drawerRecyclerView.setHasFixedSize(true);
         drawerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+
+        //Click event and Fragments
+        final GestureDetector mGestureDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onSingleTapUp(MotionEvent e){
+                return true;
+            }
+        });
+
+        drawerRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                View child = drawerRecyclerView.findChildViewUnder(e.getX(), e.getY());
+
+                if (child != null && mGestureDetector.onTouchEvent(e)) {
+                    drawerLayout.closeDrawers();
+
+                    switch (drawerRecyclerView.getChildLayoutPosition(child)) {
+                        case 1:
+                            Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 2:
+                            Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 3:
+                            Toast.makeText(MainActivity.this, "Map", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 4:
+                            Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 5:
+                            Toast.makeText(MainActivity.this, "Saved Pages", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
+
+
+
 
         //******************************Spinner Adapter for main
         main_spinner = (Spinner) findViewById(R.id.options_spinner);
