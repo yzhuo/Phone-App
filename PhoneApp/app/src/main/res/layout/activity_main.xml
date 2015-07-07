@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="10dp"
-            android:background="#80ffffff"
+            android:background="@drawable/rounded_button_gray"
             >
             <EditText
                 android:id="@+id/search"
@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".99"
                 android:layout_centerInParent="true"
-                android:background="#80ffffff"
+                android:background="@drawable/rounded_button_gray"
                 android:hint="@string/search_by"
                 android:textColorHint="#50000000"
                 android:inputType="text|textAutoCorrect"
@@ -78,7 +78,7 @@
                 android:layout_alignRight="@+id/searchArea"
                 android:id="@+id/clear"
                 android:text="X"
-                android:popupBackground="#70000000"
+                android:popupBackground="@drawable/rounded_button_gray"
                 />
         </LinearLayout>
 
