@@ -1,7 +1,5 @@
 package com.yate.phoneapp;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -12,17 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -187,40 +180,8 @@ public class MainActivity extends AppCompatActivity {
         });
         //************Spinner activity end
 
-        //******************text activity
-        EditText editText = (EditText) findViewById(R.id.search);
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_SEND){
-                    Button send = (Button) findViewById(R.id.send);
-                    send.performClick();
-                }
-                return handled;
-            }
-        });
-        //***********able to hide keyboard when outside the text
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus){
-                if(!hasFocus){
-                    hideKeyboard(v);
-                }
-            }
-        });
-        //****************text activity end
 
-        //**************reset activity
-        Button reset = (Button)findViewById(R.id.clear);
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                EditText search =(EditText)findViewById(R.id.search);
-                search.setText("");
-            }
-        });
-        //************reset activity end
+
     }
 
 
@@ -245,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
     }
     */
     //**********************continue button activity
+    /*
     public void sendMessage(View view){
         Intent intent = new Intent(this, MapsActivity.class);
         EditText search = (EditText) findViewById(R.id.search);
@@ -252,13 +214,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE,message);
         startActivity(intent);
     }
+    */
     //************************continue button activity end
 
 
-    //*************hide keyboard ******************
-    public void hideKeyboard(View view){
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
-    }
-    //**************end hide keybaord
+
 }
