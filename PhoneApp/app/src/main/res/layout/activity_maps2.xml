@@ -14,11 +14,15 @@
         android:id="@+id/map"
         tools:context="com.yate.phoneapp.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
         />
 
     <include
         android:id="@+id/map_tool_bar_top"
         layout="@layout/map_tool_bar_top"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
         >
     </include>
 
