@@ -1,5 +1,6 @@
 package com.yate.phoneapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -8,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner main_spinner;
     private static final String[]paths = {"Buy","Rent","New Listing","Recent Sold", "Featured", "Commercial", "EB-5"};
-    public final static String EXTRA_MESSAGE = "com.yate.phoneapp.MESSAGE";
+    //public final static String EXTRA_MESSAGE = "com.yate.phoneapp.MESSAGE";
 
     //butterknife library -- makes getting to access to views from two lines of code to one
     @InjectView(R.id.drawer_layout)
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Log.v("item", (String) parent.getItemAtPosition(position));
+                //Log.v("item", (String) parent.getItemAtPosition(position));
             }
 
             @Override
@@ -206,15 +206,15 @@ public class MainActivity extends AppCompatActivity {
     }
     */
     //**********************continue button activity
-    /*
+
     public void sendMessage(View view){
         Intent intent = new Intent(this, MapsActivity.class);
-        EditText search = (EditText) findViewById(R.id.search);
-        String message = search.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE,message);
+        //EditText search = (EditText) findViewById(R.id.search);
+        //String message = search.getText().toString();
+        //intent.putExtra(EXTRA_MESSAGE,message);
         startActivity(intent);
     }
-    */
+
     //************************continue button activity end
 
 
