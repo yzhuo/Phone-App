@@ -1,11 +1,7 @@
 package com.yate.phoneapp;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -17,10 +13,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
 
@@ -41,13 +33,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap map) {
         // Add a marker in Sydney, Australia, and move the camera.
-        Intent intent = getIntent();
-        String message=intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        //Intent intent = getIntent();
+        //String message=intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         //***user search location****
+        /*
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses;
-        addresses =  geocoder.getFromLocationName(message,1);
+        List<Address> addresses=null;
+        try {
+            addresses =  geocoder.getFromLocationName(message,1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if(addresses.size()>0) {
             double lat = addresses.get(0).getLatitude() * 1E6;
@@ -56,26 +53,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             map.addMarker(new MarkerOptions().position(currentLocation).title(message));
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom));
         }
+        */
         //*****end****
-        else {
         //***phone location*****
-            /*Criteria criteria = new Criteria();
-            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            String provider = locationManager.getBestProvider(criteria, true);
-            Location myLocation = locationManager.getLastKnownLocation(provider);
-            double lat = myLocation.getLatitude();
-            double lon = myLocation.getLongitude();
-            LatLng currentLocation = new LatLng(lat, lon);
-            map.addMarker(new MarkerOptions().position(currentLocation).title(message));
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom));
-            */
-            //*****end*****
-            AlertDialog.Builder adb = new AlertDialog.Builder(GoogleMap.this);
+        Criteria criteria = new Criteria();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        String provider = locationManager.getBestProvider(criteria, true);
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+        double lat = myLocation.getLatitude();
+        double lon = myLocation.getLongitude();
+        LatLng currentLocation = new LatLng(lat, lon);
+        map.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom));
+
+        //*****end*****
+
+
+        /*
+            AlertDialog.Builder adb = new AlertDialog.Builder(MapsActivity.this);
             adb.setTitle("Google Map");
             adb.setMessage("Unable to find the location");
-            adb.setPositiveButton("Close",null);
+            adb.setPositiveButton("Close", null);
             adb.show();
-        }
+        */
 
 
     }
