@@ -6,7 +6,7 @@
     android:layout_height="50dp"
     android:background="@color/TransparentBlue">
     <LinearLayout
-        android:layout_width="320dp"
+        android:layout_width="310dp"
         android:layout_height="wrap_content">
         <include
             android:id="@+id/search_box"

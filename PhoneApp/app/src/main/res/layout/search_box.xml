@@ -37,6 +37,7 @@
             android:layout_alignRight="@+id/searchArea"
             android:id="@+id/clear"
             android:text="X"
+            android:textSize="10sp"
             android:background="@color/Transparent"
             />
     </LinearLayout>
