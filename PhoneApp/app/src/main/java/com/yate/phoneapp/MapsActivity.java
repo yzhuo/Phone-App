@@ -47,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    closeButton.setVisibility(View.GONE);
                     Button send = (Button) findViewById(R.id.send);
                 }
                 return handled;
