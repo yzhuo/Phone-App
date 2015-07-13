@@ -27,16 +27,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/map_tool_bar_top">
-
+        
         <Button
             android:id="@+id/closeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:visibility="gone"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
             android:background="@drawable/rounded_button_gray"
             android:text="hide"
             />

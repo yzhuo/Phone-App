@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -31,9 +32,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps2);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        final View closeButton = findViewById(R.id.closeButton);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         //check if google map is available
+        mapFragment.getMapAsync(this);
         mapFragment.getMapAsync(this);
 
         //******************text activity
@@ -50,17 +54,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         //****************text activity end
 
-        //***********able to hide keyboard when outside the text
+        //******************close button action***********
+        closeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                hideKeyboard(v);
+                closeButton.setVisibility(View.GONE);
+                editText.clearFocus();
+            }
+        });
+        //*************end
+
+        //***********show close button on click edit text
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
+                if (hasFocus) {
+                    closeButton.setVisibility(View.VISIBLE);
                 }
             }
         });
-
-        //******hide keyboard end***
+        //******show keyboard end***
 
         //**************reset activity
         Button reset = (Button)findViewById(R.id.clear);
@@ -173,5 +187,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-    //**************end hide keybaord
+    //**************end hide keybaord************
 }

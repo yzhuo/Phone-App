@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                                 ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
 
-                //((TextView) v).setTextSize(16);
+                ((TextView) v).setGravity(Gravity.CENTER);
                 ((TextView) v).setTextColor(Color.WHITE);
                 return v;
             }
@@ -149,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                         parent);
 
                 ((TextView) v).setTextColor(Color.WHITE);
+                ((TextView) v).setGravity(Gravity.CENTER);
                 //v.setBackgroundResource(R.drawable.spinner_bg);
 
                 //((TextView) v).setTextColor(getResources().getColorStateList(
