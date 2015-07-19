@@ -125,7 +125,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng currentLocation = new LatLng(lat, lon);
         map.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom));
-
         //*****end*****
 
 
@@ -191,7 +190,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     //**************end hide keybaord************
 
-    public void openFilter(){
+    public void openFilter(View view){
         Intent intent = new Intent(this, filter.class);
         startActivity(intent);
     }
