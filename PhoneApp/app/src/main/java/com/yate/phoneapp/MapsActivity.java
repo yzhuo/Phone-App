@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -28,6 +29,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     int defaultZoom = 16;
+    Location myLocation;
+    double lat;
+    double lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         //check if google map is available
-        mapFragment.getMapAsync(this);
         mapFragment.getMapAsync(this);
 
         //******************text activity
@@ -88,6 +91,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         //************reset activity end
+        
+        Criteria criteria = new Criteria();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        String provider = locationManager.getBestProvider(criteria, true);
+        myLocation = locationManager.getLastKnownLocation(provider);
     }
 
     @Override
@@ -116,15 +138,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         */
         //*****end****
         //***phone location*****
-        Criteria criteria = new Criteria();
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        String provider = locationManager.getBestProvider(criteria, true);
-        Location myLocation = locationManager.getLastKnownLocation(provider);
+        //myLocation.getLocation(getApplicationContext(),locationResult);
+
+
+
+
         double lat = myLocation.getLatitude();
         double lon = myLocation.getLongitude();
+
         LatLng currentLocation = new LatLng(lat, lon);
         map.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom));
+
         //*****end*****
 
 
@@ -180,7 +205,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
     //*************hide keyboard ******************
@@ -194,4 +219,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, filter.class);
         startActivity(intent);
     }
+    /*
+    public MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
+        @Override
+        public void gotLocation(Location location) {
+            lat = location.getLatitude();
+            lon = location.getLongitude();
+        }
+    };
+    */
+
 }
