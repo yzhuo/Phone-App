@@ -2,6 +2,7 @@ package com.yate.phoneapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -189,4 +190,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
     //**************end hide keybaord************
+
+    public void openFilter(){
+        Intent intent = new Intent(this, filter.class);
+        startActivity(intent);
+    }
 }

@@ -22,5 +22,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@color/Transparent"
-        android:text="Filter"/>
+        android:text="Filter"
+        android:onClick="openFilter"/>
 </RelativeLayout>
