@@ -53,6 +53,10 @@
             android:name=".filter"
             android:label="@string/title_activity_filter" >
         </activity>
+
+        <service
+            android:name=".FetchAddressIntentService"
+            android:exported="false"/>
     </application>
 
 </manifest>
