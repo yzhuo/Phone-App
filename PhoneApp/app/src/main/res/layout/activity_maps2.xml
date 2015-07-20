@@ -11,6 +11,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/map_tool_bar_bottom"
         android:id="@+id/map"
         tools:context="com.yate.phoneapp.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -23,6 +24,7 @@
         layout="@layout/map_tool_bar_top"
         >
     </include>
+
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,20 +17,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
+public class MapsActivity extends FragmentActivity implements
+        OnMapReadyCallback{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    int defaultZoom = 16;
+    int defaultZoom = 17;
     Location myLocation;
-    double lat;
-    double lon;
+    double lon = 0;
+    double lat = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps2);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final View closeButton = findViewById(R.id.closeButton);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        final View clearButtonView = findViewById(R.id.clear);
+        final View locationButtonView = findViewById(R.id.location);
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         //check if google map is available
         mapFragment.getMapAsync(this);
+
 
         //******************text activity
         final EditText editText = (EditText) findViewById(R.id.search);
@@ -51,6 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    locationButtonView.setVisibility(View.VISIBLE);
+                    clearButtonView.setVisibility(View.GONE);
                     closeButton.setVisibility(View.GONE);
                     Button send = (Button) findViewById(R.id.send);
                 }
@@ -64,6 +69,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v){
                 hideKeyboard(v);
+                locationButtonView.setVisibility(View.VISIBLE);
+                clearButtonView.setVisibility(View.GONE);
                 closeButton.setVisibility(View.GONE);
                 editText.clearFocus();
             }
@@ -75,6 +82,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+                    locationButtonView.setVisibility(View.GONE);
+                    clearButtonView.setVisibility(View.VISIBLE);
                     closeButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -91,25 +100,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         //************reset activity end
-        
-        Criteria criteria = new Criteria();
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                
+        //***********location button******************
+        Button location = (Button)findViewById(R.id.location);
+        location.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //mapFragment.getView().findViewById(0x2).performClick();
+                getMyLocation();
+                //Toast.makeText(MapsActivity.this, "Click", Toast.LENGTH_SHORT).show();
             }
+        });
+        //***************end****************
+        //Criteria criteria = new Criteria();
+        //LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //String provider = locationManager.getBestProvider(criteria, true);
+        //myLocation = locationManager.getLastKnownLocation(provider);
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
 
-            public void onProviderEnabled(String provider) {}
 
-            public void onProviderDisabled(String provider) {}
-        };
-
-        String provider = locationManager.getBestProvider(criteria, true);
-        myLocation = locationManager.getLastKnownLocation(provider);
     }
 
     @Override
@@ -117,7 +126,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney, Australia, and move the camera.
         //Intent intent = getIntent();
         //String message=intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
+        Button location = (Button) findViewById(R.id.location);
+        location.performClick();
         //***user search location****
         /*
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -139,16 +149,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //*****end****
         //***phone location*****
         //myLocation.getLocation(getApplicationContext(),locationResult);
+        /*
+        Criteria criteria = new Criteria();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        String provider = locationManager.getBestProvider(criteria, true);
+        myLocation = locationManager.getLastKnownLocation(provider);
 
 
+        if(myLocation != null){
+            lat = myLocation.getLatitude();
+            lon = myLocation.getLongitude();
+        }
 
-
-        double lat = myLocation.getLatitude();
-        double lon = myLocation.getLongitude();
 
         LatLng currentLocation = new LatLng(lat, lon);
         map.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom));
+        */
+
 
         //*****end*****
 
@@ -205,6 +223,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
@@ -213,20 +233,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-    //**************end hide keybaord************
+    //**************end hide keyboard************
 
     public void openFilter(View view){
         Intent intent = new Intent(this, filter.class);
         startActivity(intent);
     }
-    /*
-    public MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
-        @Override
-        public void gotLocation(Location location) {
-            lat = location.getLatitude();
-            lon = location.getLongitude();
+
+    private void getMyLocation(){
+        Criteria criteria = new Criteria();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        String provider = locationManager.getBestProvider(criteria, true);
+        myLocation = locationManager.getLastKnownLocation(provider);
+
+
+        if(myLocation != null){
+            lat = myLocation.getLatitude();
+            lon = myLocation.getLongitude();
         }
-    };
-    */
+
+
+        LatLng currentLocation = new LatLng(lat, lon);
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLocation,defaultZoom);
+        mMap.animateCamera(cameraUpdate);
+    }
+
 
 }
