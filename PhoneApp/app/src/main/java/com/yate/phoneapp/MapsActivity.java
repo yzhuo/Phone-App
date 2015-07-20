@@ -222,12 +222,16 @@ public class MapsActivity extends FragmentActivity implements
      */
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
-        //mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        RelativeLayout topMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_top);
-        RelativeLayout botMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_bottom);
-        mMap.setPadding(0,140,0,140);
         Button location = (Button) findViewById(R.id.location);
         location.performClick();
+
+        //mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        //*****************set up padding for the map icon***********
+        RelativeLayout topMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_top);
+        RelativeLayout topMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_top);
+        RelativeLayout botMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_bottom);
+        mMap.setPadding(0, 140, 0, 140);
+        //*******************padding end*****************
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
