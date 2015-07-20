@@ -15,6 +15,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -54,9 +55,7 @@ public class MapsActivity extends FragmentActivity implements
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    locationButtonView.setVisibility(View.VISIBLE);
-                    clearButtonView.setVisibility(View.GONE);
-                    closeButton.setVisibility(View.GONE);
+                    closeButton.performClick();
                     Button send = (Button) findViewById(R.id.send);
                 }
                 return handled;
@@ -69,8 +68,8 @@ public class MapsActivity extends FragmentActivity implements
             @Override
             public void onClick(View v){
                 hideKeyboard(v);
-                locationButtonView.setVisibility(View.VISIBLE);
-                clearButtonView.setVisibility(View.GONE);
+                //locationButtonView.setVisibility(View.VISIBLE);
+                //clearButtonView.setVisibility(View.GONE);
                 closeButton.setVisibility(View.GONE);
                 editText.clearFocus();
             }
@@ -82,8 +81,8 @@ public class MapsActivity extends FragmentActivity implements
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    locationButtonView.setVisibility(View.GONE);
-                    clearButtonView.setVisibility(View.VISIBLE);
+                   // locationButtonView.setVisibility(View.GONE);
+                    //clearButtonView.setVisibility(View.VISIBLE);
                     closeButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -126,8 +125,7 @@ public class MapsActivity extends FragmentActivity implements
         // Add a marker in Sydney, Australia, and move the camera.
         //Intent intent = getIntent();
         //String message=intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        Button location = (Button) findViewById(R.id.location);
-        location.performClick();
+
         //***user search location****
         /*
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -224,7 +222,12 @@ public class MapsActivity extends FragmentActivity implements
      */
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        //mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        RelativeLayout topMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_top);
+        RelativeLayout botMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_bottom);
+        mMap.setPadding(0,140,0,140);
+        Button location = (Button) findViewById(R.id.location);
+        location.performClick();
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
