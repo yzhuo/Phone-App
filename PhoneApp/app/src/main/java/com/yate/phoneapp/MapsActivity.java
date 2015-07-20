@@ -3,70 +3,49 @@ package com.yate.phoneapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements
-        OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener{
+        OnMapReadyCallback{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     int defaultZoom = 17;
-    Location myLocation, mLastLocation;
+    Location myLocation;
     double lon = 0;
     double lat = 0;
-    String message;
-    GoogleApiClient mClient;
-    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-            .findFragmentById(R.id.map);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_maps2);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final View closeButton = findViewById(R.id.closeButton);
         final View clearButtonView = findViewById(R.id.clear);
         final View locationButtonView = findViewById(R.id.location);
-
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
         //check if google map is available
         mapFragment.getMapAsync(this);
 
-        mClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
 
         //******************text activity
         final EditText editText = (EditText) findViewById(R.id.search);
@@ -75,9 +54,10 @@ public class MapsActivity extends FragmentActivity implements
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    closeButton.performClick();
-                    moveToSearchLocation();
-                    handled = true;
+                    locationButtonView.setVisibility(View.VISIBLE);
+                    clearButtonView.setVisibility(View.GONE);
+                    closeButton.setVisibility(View.GONE);
+                    Button send = (Button) findViewById(R.id.send);
                 }
                 return handled;
             }
@@ -245,7 +225,6 @@ public class MapsActivity extends FragmentActivity implements
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        //View locationButton = ((View) findViewById(1).getParent()).findViewById(2);
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
@@ -260,79 +239,25 @@ public class MapsActivity extends FragmentActivity implements
         Intent intent = new Intent(this, filter.class);
         startActivity(intent);
     }
-    //****************get my current location****************
+
     private void getMyLocation(){
         Criteria criteria = new Criteria();
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         String provider = locationManager.getBestProvider(criteria, true);
         myLocation = locationManager.getLastKnownLocation(provider);
 
+
         if(myLocation != null){
             lat = myLocation.getLatitude();
             lon = myLocation.getLongitude();
-        }
-        else
-        {
-            Toast.makeText(MapsActivity.this, "No Known Location", Toast.LENGTH_SHORT).show();
         }
 
 
         LatLng currentLocation = new LatLng(lat, lon);
 
-        //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLocation,defaultZoom);
-        //mMap.animateCamera(cameraUpdate);
-
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLocation,defaultZoom);
+        mMap.animateCamera(cameraUpdate);
     }
-    //**************end****************
-
-    //**************move to search location*************
-    private void moveToSearchLocation(){
-        EditText editText = (EditText) findViewById(R.id.search);
-        message = editText.getText().toString();
-        Toast.makeText(MapsActivity.this, "Start Translating", Toast.LENGTH_SHORT).show();
-
-        if(Geocoder.isPresent()) {
-            try {
-                Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
-                List<Address> addresses = geocoder.getFromLocationName("1405 heather ln, Monroe, NC, 28110", 1);
-                if (addresses.size() > 0) {
-                    lat = addresses.get(0).getLatitude();
-                    lon = addresses.get(0).getLongitude();
-                    LatLng currentLocation = new LatLng(lat, lon);
-                    mMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom);
-                    mMap.animateCamera(cameraUpdate);
-                } else {
-                    Toast.makeText(MapsActivity.this, "Invalid Address", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            Toast.makeText(MapsActivity.this, "Geocoder not available", Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
-
-
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mClient);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
-    //*********************end
 
 
 }

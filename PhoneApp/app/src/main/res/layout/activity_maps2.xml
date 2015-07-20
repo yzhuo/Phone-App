@@ -15,7 +15,6 @@
         android:id="@+id/map"
         tools:context="com.yate.phoneapp.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:paddingTop="?android:attr/actionBarSize"
         />
 
 
