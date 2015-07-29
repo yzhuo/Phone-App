@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.yate.phoneapp.filter">
+
+    <!--> Price Seekerbar<-->
+    <LinearLayout
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <!--> Bed Seeker bar<-->
+    <LinearLayout
+        android:id="@+id/bed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/price"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <!--> Baths Seeker bar<-->
+    <LinearLayout
+        android:id="@+id/bath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bed"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <!--> Sqft Seeker bar<-->
+    <LinearLayout
+        android:id="@+id/sqft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bath"
+        android:orientation="vertical">
+    </LinearLayout>
+
+</RelativeLayout>

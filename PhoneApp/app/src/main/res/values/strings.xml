@@ -1,13 +1,15 @@
 <resources>
-    <string name="app_name">YatesDev</string>
-    <string name="title">Yates</string>
+    <string name="app_name">Yates Realty</string>
+    <string name="title">Yates Realty</string>
     <string name="login">Login</string>
     <string name="action_settings">Settings</string>
-
-    <string-array name="App_Options">
-        <item>Buy</item>
-        <item>Sell</item>
-        <item>Rent</item>
-    </string-array>
+    <string name="search_by">Address, City, Zip, Neighborhood or MLS</string>
+    <string name="done"><b>Continue</b></string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_filter">Filter</string>
+    <string name="price"><b>Prices</b></string>
+    <string name="bed"><b>Beds</b></string>
+    <string name="bath"><b>Baths</b></string>
+    <string name="sqft"><b>Sqft</b></string>
 
 </resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_layout"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    >
+
+    <fragment
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        tools:context="com.yate.phoneapp.MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        />
+
+
+
+    <include
+        android:id="@+id/map_tool_bar_top"
+        layout="@layout/map_tool_bar_top"
+        >
+    </include>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/map_tool_bar_top">
+
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:visibility="gone"
+            android:background="@drawable/rounded_button_gray"
+            android:text="hide"
+            />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/map_tool_bar_bottom"
+        layout="@layout/map_tool_bar_bottom"
+        >
+    </include>
+
+
+</RelativeLayout>
