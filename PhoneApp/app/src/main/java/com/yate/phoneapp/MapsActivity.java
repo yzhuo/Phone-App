@@ -228,7 +228,6 @@ public class MapsActivity extends FragmentActivity implements
         //mMap.getUiSettings().setMyLocationButtonEnabled(false);
         //*****************set up padding for the map icon***********
         RelativeLayout topMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_top);
-        RelativeLayout topMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_top);
         RelativeLayout botMenu = (RelativeLayout) findViewById(R.id.map_tool_bar_bottom);
         mMap.setPadding(0, 140, 0, 140);
         //*******************padding end*****************
