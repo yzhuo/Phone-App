@@ -28,7 +28,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -44,8 +43,7 @@ public class MapsActivity extends FragmentActivity implements
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     int defaultZoom = 17;
     Location myLocation;
-    double lon = 0;
-    double lat = 0;
+    public String searchAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     closeButton.performClick();
-                    Button send = (Button) findViewById(R.id.send);
+                    searchAddress = editText.getText().toString();
                 }
                 return handled;
             }
@@ -139,10 +137,6 @@ public class MapsActivity extends FragmentActivity implements
             }
         });
         //***************end****************
-        //Criteria criteria = new Criteria();
-        //LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //String provider = locationManager.getBestProvider(criteria, true);
-        //myLocation = locationManager.getLastKnownLocation(provider);
 
 
 
@@ -150,60 +144,6 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onMapReady(GoogleMap map) {
-        // Add a marker in Sydney, Australia, and move the camera.
-        //Intent intent = getIntent();
-        //String message=intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
-        //***user search location****
-        /*
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses=null;
-        try {
-            addresses =  geocoder.getFromLocationName(message,1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(addresses.size()>0) {
-            double lat = addresses.get(0).getLatitude() * 1E6;
-            double lon = addresses.get(0).getLongitude() * 1E6;
-            LatLng currentLocation = new LatLng(lat, lon);
-            map.addMarker(new MarkerOptions().position(currentLocation).title(message));
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom));
-        }
-        */
-        //*****end****
-        //***phone location*****
-        //myLocation.getLocation(getApplicationContext(),locationResult);
-        /*
-        Criteria criteria = new Criteria();
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        String provider = locationManager.getBestProvider(criteria, true);
-        myLocation = locationManager.getLastKnownLocation(provider);
-
-
-        if(myLocation != null){
-            lat = myLocation.getLatitude();
-            lon = myLocation.getLongitude();
-        }
-
-
-        LatLng currentLocation = new LatLng(lat, lon);
-        map.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom));
-        */
-
-
-        //*****end*****
-
-
-        /*
-            AlertDialog.Builder adb = new AlertDialog.Builder(MapsActivity.this);
-            adb.setTitle("Google Map");
-            adb.setMessage("Unable to find the location");
-            adb.setPositiveButton("Close", null);
-            adb.show();
-        */
 
 
     }
@@ -258,7 +198,7 @@ public class MapsActivity extends FragmentActivity implements
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.setMyLocationEnabled(true);
+        //mMap.setMyLocationEnabled(true);
 
         //mMap.getUiSettings().setMyLocationButtonEnabled(false);
         //*****************set up padding for the map icon***********
@@ -282,24 +222,6 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     private void getMyLocation(){
-        /*
-        Criteria criteria = new Criteria();
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        String provider = locationManager.getBestProvider(criteria, true);
-        myLocation = locationManager.getLastKnownLocation(provider);
-
-
-        if(myLocation != null){
-            lat = myLocation.getLatitude();
-            lon = myLocation.getLongitude();
-        }
-
-
-        LatLng currentLocation = new LatLng(lat, lon);
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLocation,defaultZoom);
-        mMap.animateCamera(cameraUpdate);
-        */
 
         double currentLatitude = myLocation.getLatitude();
         double currentLongitude = myLocation.getLongitude();
@@ -314,11 +236,6 @@ public class MapsActivity extends FragmentActivity implements
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
-
-        MarkerOptions options = new MarkerOptions()
-                .position(latLng)
-                .title("I am here!");
-        mMap.addMarker(options);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom);
         mMap.animateCamera(cameraUpdate);
     }
