@@ -44,12 +44,7 @@
                 android:background="@color/Transparent"
                 />
 
-            <Button
-                android:id="@+id/location"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@color/Transparent"
-                />
+
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
