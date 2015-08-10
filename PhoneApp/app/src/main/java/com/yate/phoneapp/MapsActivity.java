@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,6 +30,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -83,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     closeButton.performClick();
                     searchAddress = editText.getText().toString();
+                    setSearchAddress(searchAddress);
                 }
                 return handled;
             }
@@ -221,6 +238,7 @@ public class MapsActivity extends FragmentActivity implements
         startActivity(intent);
     }
 
+    //used when my current location button push
     private void getMyLocation(){
 
         double currentLatitude = myLocation.getLatitude();
@@ -238,6 +256,111 @@ public class MapsActivity extends FragmentActivity implements
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom);
         mMap.animateCamera(cameraUpdate);
+    }
+
+    //handle geocode jason request
+    private void setSearchAddress(String address){
+        if(address != null ||address.equals("")){
+            Toast.makeText(getBaseContext(),"No loction is entered",Toast.LENGTH_LONG).show();
+        } else {
+            String url="https://maps.googleapis.com/maps/api/geocode/json?";
+            try{
+                url = url+"address="+URLEncoder.encode(address,"utf-8")+"&sensor=false";
+            }
+            catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            DownloadTask downloadTask = new DownloadTask();
+            downloadTask.execute(url);
+        }
+    }
+
+    //downloading the data
+    private String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try{
+            URL url = new URL(strUrl);
+            //creating an http connection to communicate with url
+            urlConnection = (HttpURLConnection) url.openConnection();
+            //connecting to the url
+            urlConnection.connect();
+            //reading data from url
+            iStream=urlConnection.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+            StringBuffer sb = new StringBuffer();
+            String line = "";
+            while ((line=br.readLine())!=null){
+                sb.append(line);
+            }
+            data = sb.toString();
+            br.close();
+
+        } catch(Exception e){
+            Log.d("downloading url", e.toString());
+        } finally {
+            iStream.close();
+            urlConnection.disconnect();
+        }
+        return data;
+    }
+
+    //creating Asynctask to start downloading
+    private class DownloadTask extends AsyncTask<String, Integer, String>{
+        String data = null;
+        @Override
+        protected String doInBackground(String... url){
+            try{
+                data = downloadUrl(url[0]);
+            } catch(Exception e){
+                Log.d("Background Task", e.toString());
+            }
+            return data;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            ParserTask parserTask = new ParserTask();
+            parserTask.execute(result);
+        }
+    }
+
+    //parse geocoding data
+    class ParserTask extends AsyncTask<String, Integer, List<HashMap<String,String>>>{
+        JSONObject jObject;
+
+        @Override
+        protected List<HashMap<String,String>> doInBackground(String... jsonData){
+            List<HashMap<String,String>> places =null;
+            GeocodeJSONParser parser = new GeocodeJSONParser();
+            try{
+                jObject = new JSONObject(jsonData[0]);
+                places = parser.parse(jObject);
+            } catch(Exception e){
+                Log.d("Exception", e.toString());
+            }
+            return places;
+        }
+
+        //executed after completion of doInBackground() method
+        @Override
+        protected void onPostExecute(List<HashMap<String,String>> list) {
+            mMap.clear();
+            //mark all the return result from geocode
+            for(int i=0;i<list.size();i++){
+                MarkerOptions markerOptions = new MarkerOptions();
+                HashMap<String,String> hmPlace = list.get(i);
+                double lat = Double.parseDouble(hmPlace.get("lat"));
+                double lng = Double.parseDouble(hmPlace.get("lng"));
+                String name = hmPlace.get("formatted_address");
+                LatLng latLng = new LatLng(lat,lng);
+                markerOptions.title(name);
+                mMap.addMarker(markerOptions);
+                if(i==0){
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                }
+            }
+        }
     }
 
     @Override
