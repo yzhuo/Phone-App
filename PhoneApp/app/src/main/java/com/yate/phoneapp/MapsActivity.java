@@ -260,7 +260,7 @@ public class MapsActivity extends FragmentActivity implements
 
     //handle geocode jason request
     private void setSearchAddress(String address){
-        if(address != null ||address.equals("")){
+        if(address == null ||address.equals("")){
             Toast.makeText(getBaseContext(),"No loction is entered",Toast.LENGTH_LONG).show();
         } else {
             String url="https://maps.googleapis.com/maps/api/geocode/json?";
