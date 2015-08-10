@@ -53,6 +53,10 @@
             android:name=".filter"
             android:label="@string/title_activity_filter" >
         </activity>
+        <activity
+            android:name=".sideMenu"
+            android:label="@string/title_activity_side_menu" >
+        </activity>
     </application>
 
 </manifest>
