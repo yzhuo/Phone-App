@@ -352,12 +352,14 @@ public class MapsActivity extends FragmentActivity implements
                 HashMap<String,String> hmPlace = list.get(i);
                 double lat = Double.parseDouble(hmPlace.get("lat"));
                 double lng = Double.parseDouble(hmPlace.get("lng"));
+                Toast.makeText(getBaseContext(),"lat"+lat+",lng"+lng,Toast.LENGTH_LONG).show();
                 String name = hmPlace.get("formatted_address");
                 LatLng latLng = new LatLng(lat,lng);
+                markerOptions.position(latLng);
                 markerOptions.title(name);
                 mMap.addMarker(markerOptions);
                 if(i==0){
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                   mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                 }
             }
         }
