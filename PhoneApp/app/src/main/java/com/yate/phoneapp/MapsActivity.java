@@ -59,6 +59,7 @@ public class MapsActivity extends FragmentActivity implements
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     int defaultZoom = 17;
     public String searchAddress;
+    int firstTime = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,14 +240,13 @@ public class MapsActivity extends FragmentActivity implements
 
     //used when my current location button push
     private void getMyLocation(){
-
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        double currentLatitude = location.getLatitude();
-        double currentLongitude = location.getLongitude();
-
-        LatLng latLng = new LatLng(currentLatitude, currentLongitude);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom);
-        mMap.animateCamera(cameraUpdate);
+        if (location == null){
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
+        else {
+            handleNewLocation(location);
+        }
     }
 
     private void handleNewLocation(Location location){
@@ -373,7 +373,11 @@ public class MapsActivity extends FragmentActivity implements
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
         else {
-            handleNewLocation(location);
+            if(firstTime==1){
+                handleNewLocation(location);
+                firstTime = 0;
+            }
+
         }
     }
 
@@ -398,6 +402,6 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-        handleNewLocation(location);
+        //handleNewLocation(location);
     }
 }
