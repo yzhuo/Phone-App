@@ -58,7 +58,6 @@ public class MapsActivity extends FragmentActivity implements
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     int defaultZoom = 17;
-    Location myLocation;
     public String searchAddress;
 
     @Override
@@ -241,8 +240,9 @@ public class MapsActivity extends FragmentActivity implements
     //used when my current location button push
     private void getMyLocation(){
 
-        double currentLatitude = myLocation.getLatitude();
-        double currentLongitude = myLocation.getLongitude();
+        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        double currentLatitude = location.getLatitude();
+        double currentLongitude = location.getLongitude();
 
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom);
